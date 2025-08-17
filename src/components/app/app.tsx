@@ -14,7 +14,7 @@ import styles from './app.module.css';
 
 import { AppHeader, IngredientDetails, Modal, OrderInfo } from '@components';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import { ProtectedRoute } from '../../utils/ProtectedRoute';
+import { ProtectedRoute } from '../../pages/protected-route/ProtectedRoute';
 
 const App = () => (
   <div className={styles.app}>
