@@ -14,7 +14,7 @@ export const getIngredients = createAsyncThunk(
 
 const initialState: IngredientsState = {
   ingredients: [],
-  isLoading: true
+  isLoading: false
 };
 
 const ingredientsSlice = createSlice({

@@ -32,7 +32,7 @@ const App = () => {
       <AppHeader />
         <Routes>
           <Route path='/' element={<ConstructorPage />} />
-          <Route path='feed'>
+          <Route path='/feed'>
             <Route index element={<Feed />} />
             <Route
               path=':number'
