@@ -13,115 +13,113 @@ import '../../index.css';
 import styles from './app.module.css';
 
 import { AppHeader, IngredientDetails, Modal, OrderInfo } from '@components';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import {
+  Route,
+  Routes,
+  useNavigate,
+} from 'react-router-dom';
 import { ProtectedRoute } from '../../pages/protected-route/ProtectedRoute';
 
-const App = () => (
-  <div className={styles.app}>
-    <AppHeader />
-    <BrowserRouter>
-      <Routes>
-        <Route path='/' element={<ConstructorPage />} />
-        <Route path='feed'>
-          <Route index element={<Feed />} />
+const App = () => {
+  const navigate = useNavigate();
+
+  const closeModal = () => {
+    navigate(-1);
+  };
+
+  return (
+    <div className={styles.app}>
+      <AppHeader />
+        <Routes>
+          <Route path='/' element={<ConstructorPage />} />
+          <Route path='feed'>
+            <Route index element={<Feed />} />
+            <Route
+              path=':number'
+              element={
+                <Modal title={'GET ORDER NUMBER'} onClose={closeModal}>
+                  <OrderInfo />
+                </Modal>
+              }
+            />
+          </Route>
           <Route
-            path=':number'
-            element={
-              <Modal
-                title={'GET ORDER NUMBER'}
-                onClose={function (): void {
-                  throw new Error('Function not implemented.');
-                }}
-              >
-                <OrderInfo />
-              </Modal>
-            }
-          />
-        </Route>
-        <Route
-          path='/login'
-          element={
-            <ProtectedRoute>
-              <Login />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path='/register'
-          element={
-            <ProtectedRoute>
-              <Register />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path='/forgot-password'
-          element={
-            <ProtectedRoute>
-              <ForgotPassword />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path='/reset-password'
-          element={
-            <ProtectedRoute>
-              <ResetPassword />
-            </ProtectedRoute>
-          }
-        />
-        <Route path='/profile'>
-          <Route
-            index
+            path='/login'
             element={
               <ProtectedRoute>
-                <Profile />
+                <Login />
               </ProtectedRoute>
             }
           />
-          <Route path='orders'>
+          <Route
+            path='/register'
+            element={
+              <ProtectedRoute>
+                <Register />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path='/forgot-password'
+            element={
+              <ProtectedRoute>
+                <ForgotPassword />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path='/reset-password'
+            element={
+              <ProtectedRoute>
+                <ResetPassword />
+              </ProtectedRoute>
+            }
+          />
+          <Route path='/profile'>
             <Route
               index
               element={
                 <ProtectedRoute>
-                  <ProfileOrders />
+                  <Profile />
                 </ProtectedRoute>
               }
             />
-            <Route
-              path=':number'
-              element={
-                <ProtectedRoute>
-                  <Modal
-                    title={'GET ORDER NUMBER'}
-                    onClose={function (): void {
-                      throw new Error('Function not implemented.');
-                    }}
-                  >
-                    <OrderInfo />
-                  </Modal>
-                </ProtectedRoute>
-              }
-            />
+            <Route path='orders'>
+              <Route
+                index
+                element={
+                  <ProtectedRoute>
+                    <ProfileOrders />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path=':number'
+                element={
+                  <ProtectedRoute>
+                    <Modal title={'GET ORDER NUMBER'} onClose={closeModal}>
+                      <OrderInfo />
+                    </Modal>
+                  </ProtectedRoute>
+                }
+              />
+            </Route>
           </Route>
-        </Route>
-        <Route path='*' element={<NotFound404 />} />
-        <Route
-          path='/ingredients/:id'
-          element={
-            <Modal
-              title={'GET INGREDIENT DETAILS'}
-              onClose={function (): void {
-                throw new Error('Function not implemented.');
-              }}
-            >
-              <IngredientDetails />
-            </Modal>
-          }
-        />
-      </Routes>
-    </BrowserRouter>
-  </div>
-);
+          <Route
+            path='/ingredients/:id'
+            element={
+              <Modal
+                title={'Детали ингредиента'}
+                onClose={closeModal}
+              >
+                <IngredientDetails />
+              </Modal>
+            }
+          />
+          <Route path='*' element={<NotFound404 />} />
+        </Routes>
+    </div>
+  );
+};
 
 export default App;
