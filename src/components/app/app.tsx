@@ -16,15 +16,25 @@ import { AppHeader, IngredientDetails, Modal, OrderInfo } from '@components';
 import {
   Route,
   Routes,
+  useLocation,
   useNavigate,
 } from 'react-router-dom';
 import { ProtectedRoute } from '../../pages/protected-route/ProtectedRoute';
+import { useSelector } from '../../services/store';
+import { selectOpenOrder } from '../../slices/orderSlice';
 
 const App = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+
+  const openOrder = useSelector(selectOpenOrder);
 
   const closeModal = () => {
-    navigate(-1);
+    if (location.state && location.state.background) {
+      navigate(-1);
+    } else {
+      navigate('/');
+    }
   };
 
   return (
@@ -37,7 +47,7 @@ const App = () => {
             <Route
               path=':number'
               element={
-                <Modal title={'GET ORDER NUMBER'} onClose={closeModal}>
+                <Modal title={openOrder ? `#${openOrder.number}` : 'Загрузка...'} onClose={closeModal}>
                   <OrderInfo />
                 </Modal>
               }
