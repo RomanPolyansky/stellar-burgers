@@ -1,9 +1,9 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { TIngredient } from '@utils-types';
+import { TConstructorIngredient, TIngredient } from '@utils-types';
 
 type BurgerConstructorState = {
   bun: TIngredient | null;
-  ingredients: TIngredient[];
+  ingredients: TConstructorIngredient[];
 };
 
 const initialState: BurgerConstructorState = {
@@ -19,23 +19,39 @@ const burgerConstructorSlice = createSlice({
     selectIngredients: (state: BurgerConstructorState) => state.ingredients
   },
   reducers: {
-    addIngredient: (state, action: PayloadAction<TIngredient>) => {
-      const addedIngredient = action.payload;
-      if (addedIngredient.type === 'bun') {
-        state.bun = addedIngredient;
-        return;
-      }
-      state.ingredients.push(addedIngredient);
+    addBun: (state, action: PayloadAction<TIngredient>) => {
+      state.bun = action.payload;
+    },
+    addIngredient: (state, action: PayloadAction<TConstructorIngredient>) => {
+      state.ingredients.push(action.payload);
     },
     removeIngredient: (state, action: PayloadAction<string>) => {
       state.ingredients = state.ingredients.filter(
-        (ingredient) => ingredient._id !== action.payload
+        (ingredient) => ingredient.listId !== action.payload
       );
+    },
+    moveIngredientUpInList: (state, action: PayloadAction<string>) => {
+      const index = state.ingredients.findIndex(
+        (ingredient) => ingredient.listId === action.payload
+      );
+      if (index > 0) {
+        const [movedIngredient] = state.ingredients.splice(index, 1);
+        state.ingredients.splice(index - 1, 0, movedIngredient);
+      }
+    },
+    moveIngredientDownInList: (state, action: PayloadAction<string>) => {
+      const index = state.ingredients.findIndex(
+        (ingredient) => ingredient.listId === action.payload
+      );
+      if (index < state.ingredients.length - 1) {
+        const [movedIngredient] = state.ingredients.splice(index, 1);
+        state.ingredients.splice(index + 1, 0, movedIngredient);
+      }
     }
   }
 });
 
-export const { addIngredient, removeIngredient } =
+export const { addBun, addIngredient, removeIngredient, moveIngredientUpInList, moveIngredientDownInList } =
   burgerConstructorSlice.actions;
 
 export const { selectBun, selectIngredients } =
