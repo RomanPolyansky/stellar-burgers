@@ -19,7 +19,7 @@ import {
   useLocation,
   useNavigate,
 } from 'react-router-dom';
-import { ProtectedRoute } from '../../pages/protected-route/ProtectedRoute';
+import { ProtectedRoute } from '../../pages/protected-route/protected-route';
 import { useSelector } from '../../services/store';
 import { selectOpenOrder } from '../../slices/orderSlice';
 
@@ -56,7 +56,7 @@ const App = () => {
           <Route
             path='/login'
             element={
-              <ProtectedRoute>
+              <ProtectedRoute onUnAuth={true}>
                 <Login />
               </ProtectedRoute>
             }
@@ -64,7 +64,7 @@ const App = () => {
           <Route
             path='/register'
             element={
-              <ProtectedRoute>
+              <ProtectedRoute onUnAuth={true}>
                 <Register />
               </ProtectedRoute>
             }
@@ -72,7 +72,7 @@ const App = () => {
           <Route
             path='/forgot-password'
             element={
-              <ProtectedRoute>
+              <ProtectedRoute onUnAuth={true}>
                 <ForgotPassword />
               </ProtectedRoute>
             }
@@ -89,7 +89,7 @@ const App = () => {
             <Route
               index
               element={
-                <ProtectedRoute>
+                <ProtectedRoute >
                   <Profile />
                 </ProtectedRoute>
               }
