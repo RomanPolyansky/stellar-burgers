@@ -1,41 +1,95 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { getUserApi, loginUserApi, logoutApi, registerUserApi, TLoginData, TRegisterData } from "@api";
+import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { TUser } from "@utils-types";
-import { log } from "console";
+import { deleteCookie, getCookie, setCookie } from "../utils/cookie";
+
 
 type LoginState = {
   user: TUser | null;
-  error: string | null;
+  isAuthChecked: boolean;
+  errorText: string;
 };
 
 const initialState: LoginState = {
   user: null,
-  error: null
+  isAuthChecked: false,
+  errorText: ''
 };
+
+export const getUserInfo = createAsyncThunk(
+  'login/authCheck',
+  async () => {
+    if (getCookie('accessToken')) {
+      return getUserApi();
+    } else {
+      return Promise.reject('No access token');
+    }
+  }
+)
+
+export const logout = createAsyncThunk(
+  'login/logout',
+  async () => await logoutApi()
+);
+
+export const login = createAsyncThunk(
+  'login/login',
+  async (loginData: TLoginData) => await loginUserApi(loginData)
+);
 
 const loginSlice = createSlice({
   name: "login",
   initialState,
   selectors: {
-    selectIsLoggedIn: (state) => state.user !== null,
+    selectIsLoggedIn: (state) => !!state.user,
+    selectIsAuthChecked: (state) => state.isAuthChecked,
     selectUser: (state) => state.user,
+    selectErrorText: (state) => state.errorText,
   },
   reducers: {
-    loginSuccess: (state, action: PayloadAction<TUser>) => {
-      state.user = action.payload;
-      state.error = null;
-    },
-    loginFailure: (state, action: PayloadAction<string>) => {
-      state.error = action.payload;
-    },
-    logout: (state) => {
-      state.user = null;
-      state.error = null;
-    },
   },
+  extraReducers: (builder) => {
+    builder
+      .addCase(getUserInfo.pending, (state) => {
+        state.isAuthChecked = false;
+        state.errorText = '';
+      })
+      .addCase(getUserInfo.fulfilled, (state, action) => {
+        state.user = action.payload.user;
+        state.isAuthChecked = true;
+        state.errorText = '';
+      })
+      .addCase(getUserInfo.rejected, (state) => {
+        state.isAuthChecked = true;
+        state.user = null;
+        state.errorText = 'Unable to fetch user information';
+      })
+      .addCase(logout.fulfilled, (state) => {
+        state.user = null;
+        state.isAuthChecked = true;
+        localStorage.removeItem('refreshToken');
+        deleteCookie('accessToken');
+      })
+      .addCase(logout.rejected, (state) => {
+        state.errorText = 'Logout failed';
+      })
+      .addCase(login.pending, (state) => {
+        state.isAuthChecked = false;
+        state.errorText = '';
+      })
+      .addCase(login.fulfilled, (state, action: PayloadAction<{ accessToken: string; refreshToken: string; user: TUser }>) => {
+        state.user = action.payload.user;
+        state.isAuthChecked = true;
+        localStorage.setItem('refreshToken', action.payload.refreshToken);
+        setCookie('accessToken', action.payload.accessToken);
+      })
+      .addCase(login.rejected, (state) => {
+        state.errorText = 'Login failed';
+      })
+    }
 });
 
-export const { loginSuccess, loginFailure, logout } = loginSlice.actions;
 
-export const { selectIsLoggedIn, selectUser } = loginSlice.selectors;
+export const { selectErrorText, selectIsLoggedIn, selectUser, selectIsAuthChecked } = loginSlice.selectors;
 
 export default loginSlice.reducer;

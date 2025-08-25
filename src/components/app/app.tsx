@@ -20,14 +20,21 @@ import {
   useNavigate,
 } from 'react-router-dom';
 import { ProtectedRoute } from '../../pages/protected-route/protected-route';
-import { useSelector } from '../../services/store';
+import { useDispatch, useSelector } from '../../services/store';
 import { selectOpenOrder } from '../../slices/orderSlice';
+import { useEffect } from 'react';
+import { getUserInfo } from '../../slices/loginSlice';
 
 const App = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const dispatch = useDispatch();
 
   const openOrder = useSelector(selectOpenOrder);
+
+  useEffect(() => {
+    dispatch(getUserInfo());
+  }, [dispatch]);
 
   const closeModal = () => {
     if (location.state && location.state.background) {
@@ -80,7 +87,7 @@ const App = () => {
           <Route
             path='/reset-password'
             element={
-              <ProtectedRoute>
+              <ProtectedRoute onUnAuth={true}>
                 <ResetPassword />
               </ProtectedRoute>
             }

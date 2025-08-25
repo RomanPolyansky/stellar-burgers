@@ -1,15 +1,17 @@
-import { getOrderByNumberApi } from "@api";
+import { getOrderByNumberApi, getOrdersApi } from "@api";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { TOrder } from "@utils-types";
 
 type TOrderState = {
   openOrder: TOrder | null;
+  profileOrders: TOrder[];
   isLoading: boolean;
 }
 
 const initialState: TOrderState = {
   openOrder: null,
-  isLoading: false
+  isLoading: false,
+  profileOrders: []
 };
 
 export const getOrderById = createAsyncThunk(
@@ -17,12 +19,18 @@ export const getOrderById = createAsyncThunk(
   async (_id: number) => await getOrderByNumberApi(_id)
 )
 
+export const getProfileOrders = createAsyncThunk(
+  'order/getProfileOrders',
+  async () => await getOrdersApi()
+);
+
 export const orderSlice = createSlice({
   name: 'order',
   initialState,
   selectors: {
     selectOpenOrder: (state: TOrderState) => state.openOrder,
-    selectIsLoading: (state: TOrderState) => state.isLoading
+    selectIsLoading: (state: TOrderState) => state.isLoading,
+    selectProfileOrders: (state: TOrderState) => state.profileOrders
   },
   reducers: {
     clearOpenOrder: (state, action) => {
@@ -40,11 +48,21 @@ export const orderSlice = createSlice({
       })
       .addCase(getOrderById.rejected, (state) => {
         state.isLoading = false;
+      })
+      .addCase(getProfileOrders.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(getProfileOrders.fulfilled, (state, action) => {
+        state.profileOrders = action.payload;
+        state.isLoading = false;
+      })
+      .addCase(getProfileOrders.rejected, (state) => {
+        state.isLoading = false;
       });
   }
 });
 
 export const { clearOpenOrder } = orderSlice.actions;
-export const { selectOpenOrder, selectIsLoading } = orderSlice.selectors;
+export const { selectProfileOrders, selectOpenOrder, selectIsLoading } = orderSlice.selectors;
 
 export default orderSlice.reducer;

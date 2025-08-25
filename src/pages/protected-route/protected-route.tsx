@@ -1,6 +1,7 @@
-import { Navigate } from "react-router-dom";
+import { Navigate, useLocation } from "react-router-dom";
 import { useSelector } from "../../services/store";
-import { selectIsLoggedIn } from "../../slices/loginSlice";
+import { selectIsAuthChecked, selectIsLoggedIn } from "../../slices/loginSlice";
+import { Preloader } from "@ui";
 
 type ProtectedRouteProps = {
   children: React.ReactElement;
@@ -8,14 +9,29 @@ type ProtectedRouteProps = {
 };
 
 export const ProtectedRoute = ({ children, onUnAuth = false }: ProtectedRouteProps) => {
+  const isAuthChecked = useSelector(selectIsAuthChecked);
   const isLoggedIn = useSelector(selectIsLoggedIn);
+  const location = useLocation();
 
-  if (isLoggedIn && onUnAuth) {
-    return <Navigate to='/' />;
+  // пока идет чек на авторизацию
+  if (!isAuthChecked) {
+    return <Preloader />;
   }
 
-  if (!isLoggedIn) {
-    return <Navigate to='/login' />;
+  // для авторизованных пользователей
+  if (!onUnAuth && !isLoggedIn) {
+    return <Navigate to='/login' state={{ from: location }} />;
+  }
+
+  // для авторизованных пользователей
+  if (!isAuthChecked && onUnAuth) {
+    return <Navigate to='/login' state={{ from: location }} />;
+  }
+
+  if (onUnAuth && isLoggedIn) {
+      // для неавторизованного и авторизован
+      const { from } = location.state ?? { from: { pathname: "/" } };
+      return <Navigate to={from} />;
   }
 
   return children;
