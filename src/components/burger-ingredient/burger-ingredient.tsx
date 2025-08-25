@@ -16,7 +16,7 @@ export const BurgerIngredient: FC<TBurgerIngredientProps> = memo(
       if (ingredient.type === 'bun') {
         dispatch(addBun(ingredient));
       } else {
-        dispatch(addIngredient({... ingredient, listId: generateId() }));
+        dispatch(addIngredient({... ingredient, sortingId: generateId() }));
       }
     };
 

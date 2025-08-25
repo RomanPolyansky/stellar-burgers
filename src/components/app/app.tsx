@@ -114,7 +114,7 @@ const App = () => {
                 path=':number'
                 element={
                   <ProtectedRoute>
-                    <Modal title={'GET ORDER NUMBER'} onClose={closeModal}>
+                    <Modal title={openOrder ? `#${openOrder.number.toString()}` : 'Загрузка...'} onClose={closeModal}>
                       <OrderInfo />
                     </Modal>
                   </ProtectedRoute>

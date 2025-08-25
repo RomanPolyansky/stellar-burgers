@@ -1,4 +1,4 @@
-import { getOrderByNumberApi, getOrdersApi } from "@api";
+import { getOrderByNumberApi, getOrdersApi, orderBurgerApi } from "@api";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { TOrder } from "@utils-types";
 
@@ -6,12 +6,16 @@ type TOrderState = {
   openOrder: TOrder | null;
   profileOrders: TOrder[];
   isLoading: boolean;
+  orderRequest: boolean;
+  newOrder: TOrder | null;
 }
 
 const initialState: TOrderState = {
   openOrder: null,
   isLoading: false,
-  profileOrders: []
+  profileOrders: [],
+  newOrder: null,
+  orderRequest: false
 };
 
 export const getOrderById = createAsyncThunk(
@@ -24,18 +28,29 @@ export const getProfileOrders = createAsyncThunk(
   async () => await getOrdersApi()
 );
 
+export const orderBurger = createAsyncThunk(
+  'order/orderBurger',
+  async (ingredients: string[]) => await orderBurgerApi(ingredients)
+);
+
 export const orderSlice = createSlice({
   name: 'order',
   initialState,
   selectors: {
     selectOpenOrder: (state: TOrderState) => state.openOrder,
     selectIsLoading: (state: TOrderState) => state.isLoading,
-    selectProfileOrders: (state: TOrderState) => state.profileOrders
+    selectProfileOrders: (state: TOrderState) => state.profileOrders,
+    selectNewOrder: (state: TOrderState) => state.newOrder,
+    selectOrderRequest: (state: TOrderState) => state.orderRequest
   },
   reducers: {
     clearOpenOrder: (state, action) => {
       state.openOrder = null;
     },
+    clearOrder: (state) => {
+      state.newOrder = null;
+      state.orderRequest = false;
+    }
   },
   extraReducers: (builder) => {
     builder
@@ -58,11 +73,23 @@ export const orderSlice = createSlice({
       })
       .addCase(getProfileOrders.rejected, (state) => {
         state.isLoading = false;
+      })
+      .addCase(orderBurger.pending, (state) => {
+        state.orderRequest = true;
+      })
+      .addCase(orderBurger.fulfilled, (state, action) => {
+        state.newOrder = action.payload.order;
+        state.orderRequest = false;
+      })
+      .addCase(orderBurger.rejected, (state) => {
+        state.orderRequest = false;
       });
   }
 });
 
-export const { clearOpenOrder } = orderSlice.actions;
-export const { selectProfileOrders, selectOpenOrder, selectIsLoading } = orderSlice.selectors;
+export const { clearOpenOrder, clearOrder } = orderSlice.actions;
+export const { selectProfileOrders, 
+  selectOpenOrder, selectIsLoading, 
+  selectNewOrder, selectOrderRequest } = orderSlice.selectors;
 
 export default orderSlice.reducer;

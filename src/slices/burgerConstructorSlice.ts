@@ -16,7 +16,12 @@ const burgerConstructorSlice = createSlice({
   initialState,
   selectors: {
     selectBun: (state: BurgerConstructorState) => state.bun,
-    selectIngredients: (state: BurgerConstructorState) => state.ingredients
+    selectIngredients: (state: BurgerConstructorState) => state.ingredients,
+    selectAllIngredients: (state: BurgerConstructorState) => [
+      state.bun,
+      ...state.ingredients,
+      state.bun,
+    ]
   },
   reducers: {
     addBun: (state, action: PayloadAction<TIngredient>) => {
@@ -27,12 +32,12 @@ const burgerConstructorSlice = createSlice({
     },
     removeIngredient: (state, action: PayloadAction<string>) => {
       state.ingredients = state.ingredients.filter(
-        (ingredient) => ingredient.listId !== action.payload
+        (ingredient) => ingredient.sortingId !== action.payload
       );
     },
     moveIngredientUpInList: (state, action: PayloadAction<string>) => {
       const index = state.ingredients.findIndex(
-        (ingredient) => ingredient.listId === action.payload
+        (ingredient) => ingredient.sortingId === action.payload
       );
       if (index > 0) {
         const [movedIngredient] = state.ingredients.splice(index, 1);
@@ -41,20 +46,24 @@ const burgerConstructorSlice = createSlice({
     },
     moveIngredientDownInList: (state, action: PayloadAction<string>) => {
       const index = state.ingredients.findIndex(
-        (ingredient) => ingredient.listId === action.payload
+        (ingredient) => ingredient.sortingId === action.payload
       );
       if (index < state.ingredients.length - 1) {
         const [movedIngredient] = state.ingredients.splice(index, 1);
         state.ingredients.splice(index + 1, 0, movedIngredient);
       }
+    },
+    clearConstructor: (state) => {
+      state.bun = null;
+      state.ingredients = [];
     }
   }
 });
 
-export const { addBun, addIngredient, removeIngredient, moveIngredientUpInList, moveIngredientDownInList } =
+export const { addBun, clearConstructor, addIngredient, removeIngredient, moveIngredientUpInList, moveIngredientDownInList } =
   burgerConstructorSlice.actions;
 
-export const { selectBun, selectIngredients } =
+export const { selectBun, selectIngredients, selectAllIngredients } =
   burgerConstructorSlice.selectors;
 
 export default burgerConstructorSlice.reducer;

@@ -2,11 +2,15 @@ import { FC, useMemo } from 'react';
 import { TIngredient } from '@utils-types';
 import { BurgerConstructorUI } from '@ui';
 import {
+  clearConstructor,
+  selectAllIngredients,
   selectBun,
   selectIngredients
 } from '../../slices/burgerConstructorSlice';
-import { useSelector } from '../../services/store';
+import { useDispatch, useSelector } from '../../services/store';
 import { useNavigate } from 'react-router-dom';
+import { clearOrder, orderBurger, selectNewOrder, selectOrderRequest } from '../../slices/orderSlice';
+import { selectIsLoggedIn } from '../../slices/loginSlice';
 
 export const BurgerConstructor: FC = () => {
   const navigate = useNavigate();
@@ -16,16 +20,33 @@ export const BurgerConstructor: FC = () => {
     bun: useSelector(selectBun),
     ingredients: useSelector(selectIngredients)
   };
+  const dispatch = useDispatch();
 
-  const orderRequest = false;
+  const orderRequest = useSelector(selectOrderRequest);
 
-  const orderModalData = null;
+  const orderModalData = useSelector(selectNewOrder);
+
+  const allIngredients = useSelector(selectAllIngredients);
+
+  const isLoggedIn = useSelector(selectIsLoggedIn);
 
   const onOrderClick = () => {
-    if (!constructorItems.bun || orderRequest) return;
+    if (!constructorItems.bun || orderRequest) {
+      return;
+    }
+    if (!isLoggedIn) {
+      navigate('/login');
+      return;
+    }
+    const ingredientIds = allIngredients
+      .filter((item): item is TIngredient => item !== null)
+      .map((item) => item._id);
+    dispatch(orderBurger(ingredientIds));
   };
   const closeOrderModal = () => {
-    navigate(-1);
+    dispatch(clearOrder());
+    dispatch(clearConstructor());
+    navigate('/profile/orders');
   };
 
   const price = useMemo(
