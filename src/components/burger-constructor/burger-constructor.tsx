@@ -9,7 +9,12 @@ import {
 } from '../../slices/burgerConstructorSlice';
 import { useDispatch, useSelector } from '../../services/store';
 import { useNavigate } from 'react-router-dom';
-import { clearOrder, orderBurger, selectNewOrder, selectOrderRequest } from '../../slices/orderSlice';
+import {
+  clearOrder,
+  orderBurger,
+  selectNewOrder,
+  selectOrderRequest
+} from '../../slices/orderSlice';
 import { selectIsLoggedIn } from '../../slices/loginSlice';
 
 export const BurgerConstructor: FC = () => {

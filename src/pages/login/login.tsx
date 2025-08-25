@@ -19,7 +19,7 @@ export const Login: FC = () => {
         navigate('/');
       })
       .catch((err) => {
-        setErrorText(useSelector(selectErrorText))
+        setErrorText(useSelector(selectErrorText));
       });
   };
 

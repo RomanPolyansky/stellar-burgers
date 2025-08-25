@@ -1,6 +1,6 @@
-import { getOrderByNumberApi, getOrdersApi, orderBurgerApi } from "@api";
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { TOrder } from "@utils-types";
+import { getOrderByNumberApi, getOrdersApi, orderBurgerApi } from '@api';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { TOrder } from '@utils-types';
 
 type TOrderState = {
   openOrder: TOrder | null;
@@ -8,7 +8,7 @@ type TOrderState = {
   isLoading: boolean;
   orderRequest: boolean;
   newOrder: TOrder | null;
-}
+};
 
 const initialState: TOrderState = {
   openOrder: null,
@@ -21,7 +21,7 @@ const initialState: TOrderState = {
 export const getOrderById = createAsyncThunk(
   'order/getById',
   async (_id: number) => await getOrderByNumberApi(_id)
-)
+);
 
 export const getProfileOrders = createAsyncThunk(
   'order/getProfileOrders',
@@ -88,8 +88,12 @@ export const orderSlice = createSlice({
 });
 
 export const { clearOpenOrder, clearOrder } = orderSlice.actions;
-export const { selectProfileOrders, 
-  selectOpenOrder, selectIsLoading, 
-  selectNewOrder, selectOrderRequest } = orderSlice.selectors;
+export const {
+  selectProfileOrders,
+  selectOpenOrder,
+  selectIsLoading,
+  selectNewOrder,
+  selectOrderRequest
+} = orderSlice.selectors;
 
 export default orderSlice.reducer;

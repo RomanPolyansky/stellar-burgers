@@ -15,11 +15,15 @@ export const AppHeaderUI: FC<TAppHeaderUIProps> = ({ userName }) => (
       <div className={styles.menu_part_left}>
         <>
           <BurgerIcon type={'primary'} />
-          <Link to={'/'} className='text text_type_main-default ml-2 mr-10'>Конструктор</Link>
+          <Link to={'/'} className='text text_type_main-default ml-2 mr-10'>
+            Конструктор
+          </Link>
         </>
         <>
           <ListIcon type={'primary'} />
-          <Link to={'/feed'} className='text text_type_main-default ml-2'>Лента заказов</Link>
+          <Link to={'/feed'} className='text text_type_main-default ml-2'>
+            Лента заказов
+          </Link>
         </>
       </div>
       <div className={styles.logo}>

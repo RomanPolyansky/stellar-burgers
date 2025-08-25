@@ -20,7 +20,7 @@ const burgerConstructorSlice = createSlice({
     selectAllIngredients: (state: BurgerConstructorState) => [
       state.bun,
       ...state.ingredients,
-      state.bun,
+      state.bun
     ]
   },
   reducers: {
@@ -60,8 +60,14 @@ const burgerConstructorSlice = createSlice({
   }
 });
 
-export const { addBun, clearConstructor, addIngredient, removeIngredient, moveIngredientUpInList, moveIngredientDownInList } =
-  burgerConstructorSlice.actions;
+export const {
+  addBun,
+  clearConstructor,
+  addIngredient,
+  removeIngredient,
+  moveIngredientUpInList,
+  moveIngredientDownInList
+} = burgerConstructorSlice.actions;
 
 export const { selectBun, selectIngredients, selectAllIngredients } =
   burgerConstructorSlice.selectors;

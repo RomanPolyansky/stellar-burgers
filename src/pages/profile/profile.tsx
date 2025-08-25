@@ -6,7 +6,7 @@ import { updateUserApi } from '@api';
 import { useDispatch } from '../../services/store';
 
 export const Profile: FC = () => {
-  const user = useSelector(selectUser)
+  const user = useSelector(selectUser);
   const dispatch = useDispatch();
 
   const [formValue, setFormValue] = useState({

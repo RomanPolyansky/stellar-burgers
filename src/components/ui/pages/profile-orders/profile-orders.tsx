@@ -6,7 +6,10 @@ import { ProfileOrdersUIProps } from './type';
 import { ProfileMenu, OrdersList } from '@components';
 import { Preloader } from '../../preloader';
 
-export const ProfileOrdersUI: FC<ProfileOrdersUIProps> = ({ orders, isLoading }) => (
+export const ProfileOrdersUI: FC<ProfileOrdersUIProps> = ({
+  orders,
+  isLoading
+}) => (
   <main className={`${styles.main}`}>
     <div className={`mt-30 mr-15 ${styles.menu}`}>
       <ProfileMenu />

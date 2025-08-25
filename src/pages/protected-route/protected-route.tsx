@@ -1,14 +1,17 @@
-import { Navigate, useLocation } from "react-router-dom";
-import { useSelector } from "../../services/store";
-import { selectIsAuthChecked, selectIsLoggedIn } from "../../slices/loginSlice";
-import { Preloader } from "@ui";
+import { Navigate, useLocation } from 'react-router-dom';
+import { useSelector } from '../../services/store';
+import { selectIsAuthChecked, selectIsLoggedIn } from '../../slices/loginSlice';
+import { Preloader } from '@ui';
 
 type ProtectedRouteProps = {
   children: React.ReactElement;
   onUnAuth?: boolean;
 };
 
-export const ProtectedRoute = ({ children, onUnAuth = false }: ProtectedRouteProps) => {
+export const ProtectedRoute = ({
+  children,
+  onUnAuth = false
+}: ProtectedRouteProps) => {
   const isAuthChecked = useSelector(selectIsAuthChecked);
   const isLoggedIn = useSelector(selectIsLoggedIn);
   const location = useLocation();
@@ -29,10 +32,10 @@ export const ProtectedRoute = ({ children, onUnAuth = false }: ProtectedRoutePro
   }
 
   if (onUnAuth && isLoggedIn) {
-      // для неавторизованного и авторизован
-      const { from } = location.state ?? { from: { pathname: "/" } };
-      return <Navigate to={from} />;
+    // для неавторизованного и авторизован
+    const { from } = location.state ?? { from: { pathname: '/' } };
+    return <Navigate to={from} />;
   }
 
   return children;
-}
+};

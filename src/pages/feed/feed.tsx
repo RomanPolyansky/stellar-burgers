@@ -19,12 +19,14 @@ export const Feed: FC = () => {
   const refreshFeed = () => {
     dispatch(getFeedOrders());
   };
-  
+
   return (
     <>
-      {isLoading ? <Preloader /> : 
+      {isLoading ? (
+        <Preloader />
+      ) : (
         <FeedUI orders={orders} handleGetFeeds={refreshFeed} />
-      }
+      )}
     </>
   );
 };
