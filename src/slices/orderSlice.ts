@@ -20,17 +20,17 @@ const initialState: TOrderState = {
 
 export const getOrderById = createAsyncThunk(
   'order/getById',
-  async (_id: number) => await getOrderByNumberApi(_id)
+  getOrderByNumberApi
 );
 
 export const getProfileOrders = createAsyncThunk(
   'order/getProfileOrders',
-  async () => await getOrdersApi()
+  getOrdersApi
 );
 
 export const orderBurger = createAsyncThunk(
   'order/orderBurger',
-  async (ingredients: string[]) => await orderBurgerApi(ingredients)
+  orderBurgerApi
 );
 
 export const orderSlice = createSlice({

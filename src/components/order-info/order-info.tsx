@@ -8,15 +8,12 @@ import { getOrderById, selectOpenOrder } from '../../slices/orderSlice';
 import { useParams } from 'react-router-dom';
 
 export const OrderInfo: FC = () => {
-  /** TODO: взять переменные orderData и ingredients из стора */
   const dispatch = useDispatch();
   const params = useParams();
 
-  const orderId = Number(params.id);
-
   useEffect(() => {
-    dispatch(getOrderById(orderId));
-  }, [dispatch, orderId]);
+    dispatch(getOrderById(Number(params.id)));
+  }, [dispatch]);
 
   const orderData = useSelector(selectOpenOrder);
 

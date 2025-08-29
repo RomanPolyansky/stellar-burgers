@@ -9,7 +9,7 @@ type IngredientsState = {
 
 export const getIngredients = createAsyncThunk(
   'ingredients/getIngredients',
-  async () => await getIngredientsApi()
+  getIngredientsApi
 );
 
 const initialState: IngredientsState = {

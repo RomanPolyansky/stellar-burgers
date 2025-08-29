@@ -7,7 +7,6 @@ import {
   selectIsLoading,
   selectProfileOrders
 } from '../../slices/orderSlice';
-import { Preloader } from '@ui';
 
 export const ProfileOrders: FC = () => {
   const dispatch = useDispatch();

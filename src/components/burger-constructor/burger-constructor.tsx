@@ -20,7 +20,6 @@ import { selectIsLoggedIn } from '../../slices/loginSlice';
 export const BurgerConstructor: FC = () => {
   const navigate = useNavigate();
 
-  /** TODO: взять переменные constructorItems, orderRequest и orderModalData из стора */
   const constructorItems = {
     bun: useSelector(selectBun),
     ingredients: useSelector(selectIngredients)
