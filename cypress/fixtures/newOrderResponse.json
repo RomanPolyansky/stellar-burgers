@@ -1,0 +1,47 @@
+{
+  "success": true,
+  "name": "Краторный био-марсианский бургер",
+  "order": {
+    "ingredients": [
+      {
+        "_id": "1",
+        "name": "Тестовая булка",
+        "type": "bun",
+        "proteins": 80,
+        "fat": 24,
+        "carbohydrates": 53,
+        "calories": 420,
+        "price": 1255,
+        "image": "https://code.s3.yandex.net/react/code/bun-02.png",
+        "image_large": "https://code.s3.yandex.net/react/code/bun-02-large.png",
+        "image_mobile": "https://code.s3.yandex.net/react/code/bun-02-mobile.png"
+      },
+      {
+        "_id": "2",
+        "name": "Текстовая котлета",
+        "type": "main",
+        "proteins": 420,
+        "fat": 142,
+        "carbohydrates": 242,
+        "calories": 4242,
+        "price": 424,
+        "image": "https://code.s3.yandex.net/react/code/meat-01.png",
+        "image_large": "https://code.s3.yandex.net/react/code/meat-01-large.png",
+        "image_mobile": "https://code.s3.yandex.net/react/code/meat-01-mobile.png"
+      }
+    ],
+    "_id": "68fd237a74993f001b5bb1dc",
+    "owner": {
+      "email": "test@user.cypress",
+      "name": "Test user",
+      "createdAt": "2025-08-24T20:00:45.237Z",
+      "updatedAt": "2025-08-29T20:43:22.996Z"
+    },
+    "status": "done",
+    "name": "Краторный био-марсианский бургер",
+    "createdAt": "2025-10-25T19:22:34.135Z",
+    "updatedAt": "2025-10-25T19:22:35.470Z",
+    "number": 12345,
+    "price": 2934
+  }
+}

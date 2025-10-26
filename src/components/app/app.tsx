@@ -17,7 +17,7 @@ import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import { ProtectedRoute } from '../../pages/protected-route/protected-route';
 import { useDispatch, useSelector } from '../../services/store';
 import { selectOpenOrder } from '../../slices/orderSlice';
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { getUserInfo } from '../../slices/loginSlice';
 import { getIngredients } from '../../slices/ingredientsSlice';
 
@@ -30,10 +30,16 @@ const App = () => {
 
   const openOrder = useSelector(selectOpenOrder);
 
+  const hasRun = useRef(false);
+
   useEffect(() => {
+    if (hasRun.current) return;
+    
     dispatch(getUserInfo());
     dispatch(getIngredients());
-  }, [dispatch]);
+
+    hasRun.current = true;
+  });
 
   const closeModal = () => {
     if (location.state && location.state.background) {
