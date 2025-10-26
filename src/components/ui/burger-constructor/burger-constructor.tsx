@@ -5,6 +5,7 @@ import {
   CurrencyIcon
 } from '@zlden/react-developer-burger-ui-components';
 import styles from './burger-constructor.module.css';
+import { dataCy } from '../../../utils/dataCy';
 import { BurgerConstructorUIProps } from './type';
 import { TConstructorIngredient } from '@utils-types';
 import { BurgerConstructorElement, Modal } from '@components';
@@ -20,7 +21,7 @@ export const BurgerConstructorUI: FC<BurgerConstructorUIProps> = ({
 }) => (
   <section className={styles.burger_constructor}>
     {constructorItems.bun ? (
-      <div data-cy="burger-constructor-selected-bun-top" className={`${styles.element} mb-4 mr-4`}>
+  <div data-cy={dataCy.burgerConstructorSelectedBunTop} className={`${styles.element} mb-4 mr-4`}>
         <ConstructorElement
           type='top'
           isLocked
@@ -36,7 +37,7 @@ export const BurgerConstructorUI: FC<BurgerConstructorUIProps> = ({
         Выберите булки
       </div>
     )}
-    <ul className={styles.elements} data-cy="burger-ingredients-fillers-list">
+  <ul className={styles.elements} data-cy={dataCy.burgerIngredientsFillersList}>
       {constructorItems.ingredients.length > 0 ? (
         constructorItems.ingredients.map(
           (item: TConstructorIngredient, index: number) => (
@@ -57,7 +58,7 @@ export const BurgerConstructorUI: FC<BurgerConstructorUIProps> = ({
       )}
     </ul>
     {constructorItems.bun ? (
-      <div className={`${styles.element} mt-4 mr-4`} data-cy="burger-constructor-selected-bun-bottom">
+  <div className={`${styles.element} mt-4 mr-4`} data-cy={dataCy.burgerConstructorSelectedBunBottom}>
         <ConstructorElement
           type='bottom'
           isLocked
@@ -73,7 +74,7 @@ export const BurgerConstructorUI: FC<BurgerConstructorUIProps> = ({
         Выберите булки
       </div>
     )}
-    <div className={`${styles.total} mt-10 mr-4`} data-cy="burger-constructor-total-section">
+  <div className={`${styles.total} mt-10 mr-4`} data-cy={dataCy.burgerConstructorTotalSection}>
       <div className={`${styles.cost} mr-10`}>
         <p className={`text ${styles.text} mr-2`}>{price}</p>
         <CurrencyIcon type='primary' />

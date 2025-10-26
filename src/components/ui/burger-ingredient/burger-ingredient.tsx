@@ -1,6 +1,7 @@
 import React, { FC, memo } from 'react';
 import { Link } from 'react-router-dom';
 import styles from './burger-ingredient.module.css';
+import { dataCy } from '../../../utils/dataCy';
 
 import {
   Counter,
@@ -16,7 +17,7 @@ export const BurgerIngredientUI: FC<TBurgerIngredientUIProps> = memo(
 
     return (
       <li className={styles.container} 
-          data-cy={`ingredient-in-list-${_id}`}>
+          data-cy={dataCy.ingredientInList(_id)}>
         <Link
           className={styles.article}
           to={`/ingredients/${_id}`}
