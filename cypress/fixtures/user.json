@@ -1,0 +1,9 @@
+{
+    "success": true,
+    "accessToken": "Bearer testaccesstoken1234567890",
+    "refreshToken": "testrefreshtoken1234567890",
+    "user": {
+        "email": "test@user.cypress",
+        "name": "Test user"
+    }
+}

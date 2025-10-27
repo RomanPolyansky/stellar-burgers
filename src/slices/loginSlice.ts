@@ -10,7 +10,7 @@ import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { TUser } from '@utils-types';
 import { deleteCookie, getCookie, setCookie } from '../utils/cookie';
 
-type LoginState = {
+export type LoginState = {
   user: TUser | null;
   isAuthChecked: boolean;
   errorText: string;
@@ -95,8 +95,12 @@ const loginSlice = createSlice({
           setCookie('accessToken', action.payload.accessToken);
         }
       )
-      .addCase(login.rejected, (state) => {
-        state.errorText = 'Login failed';
+      .addCase(login.rejected, (state, action) => {
+        state.errorText = action.error.message
+          ? action.error.message
+          : 'Login failed';
+        state.isAuthChecked = true;
+        state.user = null;
       });
   }
 });

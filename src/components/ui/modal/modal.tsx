@@ -1,6 +1,7 @@
 import { FC, memo } from 'react';
 
 import styles from './modal.module.css';
+import { dataCy } from '../../../utils/dataCy';
 
 import { CloseIcon } from '@zlden/react-developer-burger-ui-components';
 import { TModalUIProps } from './type';
@@ -9,7 +10,7 @@ import { ModalOverlayUI } from '@ui';
 export const ModalUI: FC<TModalUIProps> = memo(
   ({ title, onClose, children }) => (
     <>
-      <div className={styles.modal}>
+      <div className={styles.modal} data-cy={dataCy.modalWindow}>
         <div className={styles.header}>
           <h3 className={`${styles.title} text text_type_main-large`}>
             {title}

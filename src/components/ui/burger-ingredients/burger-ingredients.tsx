@@ -2,6 +2,7 @@ import React, { FC, memo } from 'react';
 import { Tab } from '@zlden/react-developer-burger-ui-components';
 
 import styles from './burger-ingredients.module.css';
+import { dataCy } from '../../../utils/dataCy';
 import { BurgerIngredientsUIProps } from './type';
 import { IngredientsCategory } from '@components';
 
@@ -20,7 +21,10 @@ export const BurgerIngredientsUI: FC<BurgerIngredientsUIProps> = memo(
     onTabClick
   }) => (
     <>
-      <section className={styles.burger_ingredients}>
+      <section
+        className={styles.burger_ingredients}
+        data-cy={dataCy.burgerIngredientsSection}
+      >
         <nav>
           <ul className={styles.menu}>
             <Tab value='bun' active={currentTab === 'bun'} onClick={onTabClick}>
