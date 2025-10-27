@@ -1,5 +1,5 @@
-import { configureStore } from "@reduxjs/toolkit";
-import burgerConstructorSlice from "..//slices/burgerConstructorSlice";
+import { configureStore } from '@reduxjs/toolkit';
+import burgerConstructorSlice from '..//slices/burgerConstructorSlice';
 
 const sampleData = {
   bun: null,
@@ -31,11 +31,11 @@ const sampleData = {
 const testStore = () =>
   configureStore({
     reducer: {
-      burgerConstructor: burgerConstructorSlice,
+      burgerConstructor: burgerConstructorSlice
     }
   });
 
-describe('тестирование слайса burgerConstructor', function() {
+describe('тестирование слайса burgerConstructor', function () {
   it('должен возвращать начальное состояние', () => {
     const store = testStore();
 
@@ -132,5 +132,4 @@ describe('тестирование слайса burgerConstructor', function() {
     expect(state.ingredients[0]).toEqual(sampleData.ingredients[1]);
     expect(state.ingredients[1]).toEqual(sampleData.ingredients[2]);
   });
-
 });

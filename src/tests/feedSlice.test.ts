@@ -4,7 +4,7 @@ import feedReducer, {
   selectTotal,
   selectTotalToday,
   selectIsLoading,
-  getFeedOrders,
+  getFeedOrders
 } from '../slices/feedSlice';
 import type { TOrder } from '@utils-types';
 
@@ -16,7 +16,7 @@ const sampleOrders: TOrder[] = [
     createdAt: '2025-01-01T00:00:00.000Z',
     updatedAt: '2025-01-01T00:00:00.000Z',
     number: 101,
-    ingredients: ['bun-1', 'main-1', 'sauce-1'],
+    ingredients: ['bun-1', 'main-1', 'sauce-1']
   },
   {
     _id: 'order-2',
@@ -25,15 +25,15 @@ const sampleOrders: TOrder[] = [
     createdAt: '2025-01-02T00:00:00.000Z',
     updatedAt: '2025-01-02T00:00:00.000Z',
     number: 102,
-    ingredients: ['bun-1', 'main-1'],
-  },
+    ingredients: ['bun-1', 'main-1']
+  }
 ];
 
 const testStore = () =>
   configureStore({
     reducer: {
-      feed: feedReducer,
-    },
+      feed: feedReducer
+    }
   });
 
 describe('тестирование слайса feed', () => {
@@ -45,7 +45,7 @@ describe('тестирование слайса feed', () => {
       orders: [],
       total: 0,
       totalToday: 0,
-      isLoading: true,
+      isLoading: true
     });
   });
 
@@ -69,8 +69,8 @@ describe('тестирование слайса feed', () => {
         success: true,
         orders: sampleOrders,
         total: 200,
-        totalToday: 20,
-      }),
+        totalToday: 20
+      })
     }) as jest.Mock;
 
     await store.dispatch(getFeedOrders());
@@ -92,8 +92,8 @@ describe('тестирование слайса feed', () => {
         success: false,
         orders: [],
         total: 0,
-        totalToday: 0,
-      }),
+        totalToday: 0
+      })
     }) as jest.Mock;
 
     await store.dispatch(getFeedOrders());
@@ -108,7 +108,7 @@ describe('тестирование слайса feed', () => {
 
     store.dispatch({
       type: 'feed/getFeedOrders/fulfilled',
-      payload: { orders: sampleOrders, total: 500, totalToday: 50 },
+      payload: { orders: sampleOrders, total: 500, totalToday: 50 }
     });
 
     const rootState = store.getState();

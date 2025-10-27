@@ -8,30 +8,30 @@ describe('тестирование редьюсера rootReducer', () => {
     expect(state).toEqual({
       ingredients: {
         ingredients: [],
-        isLoading: false,
+        isLoading: false
       },
       burgerConstructor: {
         bun: null,
-        ingredients: [],
+        ingredients: []
       },
       feed: {
         orders: [],
         total: 0,
         totalToday: 0,
-        isLoading: true,
+        isLoading: true
       },
       order: {
         openOrder: null,
         isLoading: false,
         profileOrders: [],
         newOrder: null,
-        orderRequest: false,
+        orderRequest: false
       },
       login: {
         user: null,
         isAuthChecked: false,
-        errorText: '',
-      },
+        errorText: ''
+      }
     });
   });
 });

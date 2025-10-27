@@ -1,7 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
-import orderReducer, {
-  orderBurger,
-} from '../slices/orderSlice';
+import orderReducer, { orderBurger } from '../slices/orderSlice';
 import type { TOrder } from '@utils-types';
 import * as api from '@api';
 import { orderBurgerApi } from '@api';
@@ -13,12 +11,12 @@ const newOrder: TOrder = {
   createdAt: '2025-01-03T00:00:00.000Z',
   updatedAt: '2025-01-03T00:00:00.000Z',
   number: 1003,
-  ingredients: ['bun-1', 'main-1', 'sauce-1'],
+  ingredients: ['bun-1', 'main-1', 'sauce-1']
 };
 
 const newOrderResponse = {
-  order: newOrder,
-}
+  order: newOrder
+};
 // export type TOrder = {
 //   _id: string;
 //   status: string;
@@ -32,8 +30,8 @@ const newOrderResponse = {
 const testStore = () =>
   configureStore({
     reducer: {
-      order: orderReducer,
-    },
+      order: orderReducer
+    }
   });
 
 describe('тестирование слайса order', () => {
@@ -49,7 +47,7 @@ describe('тестирование слайса order', () => {
       isLoading: false,
       profileOrders: [],
       newOrder: null,
-      orderRequest: false,
+      orderRequest: false
     });
   });
 
@@ -63,7 +61,7 @@ describe('тестирование слайса order', () => {
     // fulfilled (payload has order)
     store.dispatch({
       type: 'order/orderBurger/fulfilled',
-      payload: { order: newOrder },
+      payload: { order: newOrder }
     });
     let state = store.getState().order;
     expect(state.orderRequest).toBe(false);
@@ -78,9 +76,9 @@ describe('тестирование слайса order', () => {
   it('fulfilled', async () => {
     const store = testStore();
 
-    store.dispatch({ 
+    store.dispatch({
       type: 'order/orderBurger/fulfilled',
-      payload: { order: newOrder },
+      payload: { order: newOrder }
     });
 
     const state = store.getState().order;

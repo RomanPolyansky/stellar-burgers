@@ -96,7 +96,9 @@ const loginSlice = createSlice({
         }
       )
       .addCase(login.rejected, (state, action) => {
-        state.errorText = action.error.message? action.error.message : 'Login failed';
+        state.errorText = action.error.message
+          ? action.error.message
+          : 'Login failed';
         state.isAuthChecked = true;
         state.user = null;
       });

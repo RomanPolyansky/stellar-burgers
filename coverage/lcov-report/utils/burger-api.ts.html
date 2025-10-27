@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">36.17% </span>
+                <span class="strong">41.7% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>85/235</span>
+                <span class='fraction'>98/235</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">75% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/0</span>
+                <span class='fraction'>9/12</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">20% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>0/15</span>
+                <span class='fraction'>3/15</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">36.17% </span>
+                <span class="strong">41.7% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>85/235</span>
+                <span class='fraction'>98/235</span>
             </div>
         
             
@@ -304,7 +304,7 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -372,20 +372,20 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -538,8 +538,8 @@ import { TIngredient, TOrder, TOrdersData, TUser } from './types';
 &nbsp;
 const URL = process.env.BURGER_API_URL;
 &nbsp;
-const checkResponse = <span class="fstat-no" title="function not covered" >&lt;T&gt;(res: Response): Promise&lt;T&gt; =&gt;</span>
-<span class="cstat-no" title="statement not covered" >  res.ok ? res.json() : res.json().then((err) =&gt; Promise.reject(err));</span>
+const checkResponse = &lt;T&gt;(res: Response): Promise&lt;T&gt; =&gt;
+  res.ok ? res.json() <span class="branch-0 cbranch-no" title="branch not covered" >: res.json().then((err) =&gt; Promise.reject(err));</span>
 &nbsp;
 type TServerResponse&lt;T&gt; = {
   success: boolean;
@@ -606,21 +606,21 @@ type TOrdersResponse = TServerResponse&lt;{
   data: TOrder[];
 }&gt;;
 &nbsp;
-export const getIngredientsApi = <span class="fstat-no" title="function not covered" >() =&gt;</span>
-<span class="cstat-no" title="statement not covered" >  fetch(`${URL}/ingredients`)</span>
-<span class="cstat-no" title="statement not covered" >    .then((res) =&gt; checkResponse&lt;TIngredientsResponse&gt;(res))</span>
-<span class="cstat-no" title="statement not covered" >    .then((data) =&gt; {</span>
-<span class="cstat-no" title="statement not covered" >      if (data?.success) return data.data;</span>
-<span class="cstat-no" title="statement not covered" >      return Promise.reject(data);</span>
-<span class="cstat-no" title="statement not covered" >    });</span>
+export const getIngredientsApi = () =&gt;
+  fetch(`${URL}/ingredients`)
+    .then((res) =&gt; checkResponse&lt;TIngredientsResponse&gt;(res))
+    .then((data) =&gt; {
+      if (data<span class="branch-0 cbranch-no" title="branch not covered" >?.s</span>uccess) return data.data;
+      return Promise.reject(data);
+    });
 &nbsp;
-export const getFeedsApi = <span class="fstat-no" title="function not covered" >() =&gt;</span>
-<span class="cstat-no" title="statement not covered" >  fetch(`${URL}/orders/all`)</span>
-<span class="cstat-no" title="statement not covered" >    .then((res) =&gt; checkResponse&lt;TFeedsResponse&gt;(res))</span>
-<span class="cstat-no" title="statement not covered" >    .then((data) =&gt; {</span>
-<span class="cstat-no" title="statement not covered" >      if (data?.success) return data;</span>
-<span class="cstat-no" title="statement not covered" >      return Promise.reject(data);</span>
-<span class="cstat-no" title="statement not covered" >    });</span>
+export const getFeedsApi = () =&gt;
+  fetch(`${URL}/orders/all`)
+    .then((res) =&gt; checkResponse&lt;TFeedsResponse&gt;(res))
+    .then((data) =&gt; {
+      if (data<span class="branch-0 cbranch-no" title="branch not covered" >?.s</span>uccess) return data;
+      return Promise.reject(data);
+    });
 &nbsp;
 export const getOrdersApi = <span class="fstat-no" title="function not covered" >() =&gt;</span>
 <span class="cstat-no" title="statement not covered" >  fetchWithRefresh&lt;TFeedsResponse&gt;(`${URL}/orders`, {</span>
@@ -775,7 +775,7 @@ export const logoutApi = <span class="fstat-no" title="function not covered" >()
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-10-26T20:48:54.360Z
+                at 2025-10-27T20:29:23.656Z
             </div>
         <script src="../prettify.js"></script>
         <script>

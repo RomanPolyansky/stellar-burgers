@@ -34,7 +34,7 @@ const App = () => {
 
   useEffect(() => {
     if (hasRun.current) return;
-    
+
     dispatch(getUserInfo());
     dispatch(getIngredients());
 

@@ -5,7 +5,7 @@ import ingredientsReducer, {
   selectMains,
   selectSauces,
   selectIsLoading,
-  getIngredients,
+  getIngredients
 } from '../slices/ingredientsSlice';
 import { TIngredient } from '@utils-types';
 
@@ -54,8 +54,8 @@ const sampleIngredients: TIngredient[] = [
 const testStore = () =>
   configureStore({
     reducer: {
-      ingredients: ingredientsReducer,
-    },
+      ingredients: ingredientsReducer
+    }
   });
 
 describe('тестирование слайса ingredients', () => {
@@ -65,7 +65,7 @@ describe('тестирование слайса ingredients', () => {
 
     expect(initialState).toEqual({
       ingredients: [],
-      isLoading: false,
+      isLoading: false
     });
   });
 
@@ -108,10 +108,10 @@ describe('тестирование слайса ingredients', () => {
         data: []
       })
     }) as jest.Mock;
-    
+
     await store.dispatch(getIngredients());
     const state = store.getState().ingredients;
-    
+
     expect(state.isLoading).toBe(false);
     expect(state.ingredients).toHaveLength(0);
   });
@@ -122,7 +122,7 @@ describe('тестирование слайса ingredients', () => {
     // preload state via fulfilled
     store.dispatch({
       type: 'ingredients/getIngredients/fulfilled',
-      payload: sampleIngredients,
+      payload: sampleIngredients
     });
 
     const rootState = store.getState();
@@ -133,5 +133,4 @@ describe('тестирование слайса ingredients', () => {
     expect(selectSauces(rootState)).toHaveLength(1);
     expect(selectIsLoading(rootState)).toBe(false);
   });
-  
 });
